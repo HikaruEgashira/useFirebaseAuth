@@ -3,7 +3,7 @@ import firebase from 'firebase';
 
 export function useFirebaseAuth(auth: firebase.auth.Auth) {
   const user = ref<firebase.User | null>(null);
-  const existUser = ref<boolean>(false);
+  const existUser = ref<boolean>(true);
   const loading = ref<boolean>(true);
 
   const update = (firebaseUser: firebase.User | null) => {
