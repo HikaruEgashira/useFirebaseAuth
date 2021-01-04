@@ -3,13 +3,11 @@ import firebase from 'firebase';
 
 export function useFirebaseAuth(auth: firebase.auth.Auth) {
   const user = ref<firebase.User | null>(null);
-  const existUser = ref<boolean>(true);
-  const loading = ref<boolean>(true);
+  const state = ref<'loading' | 'sign-out' | 'sign-in'>('loading');
 
   const update = (firebaseUser: firebase.User | null) => {
     user.value = firebaseUser;
-    existUser.value = Boolean(firebaseUser);
-    loading.value = false;
+    state.value = firebaseUser ? 'sign-in' : 'sign-out';
   };
   const unsubscribe = () => auth.onAuthStateChanged(update);
 
@@ -19,8 +17,7 @@ export function useFirebaseAuth(auth: firebase.auth.Auth) {
 
   return {
     user,
-    existUser,
-    loading,
+    state,
   };
 }
 

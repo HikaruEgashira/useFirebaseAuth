@@ -1,16 +1,24 @@
 # useFirebaseAuth
 
+https://github.com/HikaruEgashira/useFirebaseAuth
+
+Firebase のサインイン状態を取得します。
+
 ## usage
 
 ```vue
 <template>
   <div>
-    <button v-if="!existUser" @click="login()">login/signin</button>
-    <button v-else @click="logout()">logout</button>
+    <div v-if="state === 'loading'">loading</div>
+    <div v-else-if="state === 'sign-in'">{{ user.displayName }}</div>
+    <div v-else-if="state === 'sign-out'">user not found</div>
 
-    <div v-if="loading">loading</div>
-    <div v-if="existUser && !loading">{{ user.displayName }}</div>
-    <div v-else-if="!existUser">user not found</div>
+    <button v-if="state === 'sign-out'" @click="signin()">
+      sign in
+    </button>
+    <button v-else-if="state === 'sign-in'" @click="logout()">
+      logout
+    </button>
   </div>
 </template>
 
